@@ -9,7 +9,7 @@ import com.cdp.moneytracker.repository.model.Movement
 import com.cdp.moneytracker.repository.model.MovementType
 import org.junit.*
 import org.junit.runner.RunWith
-import java.time.LocalDateTime
+import java.time.LocalDate
 
 
 @RunWith(AndroidJUnit4::class)
@@ -18,14 +18,14 @@ open class MovementDaoTest {
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    private lateinit var database: Database
+    private lateinit var database: MoneyTrackerDatabase
 
     @Before
     fun initDb() {
         // using an in-memory database because the information stored here disappears after test
         database = Room.inMemoryDatabaseBuilder(
             ApplicationProvider.getApplicationContext(),
-            Database::class.java
+            MoneyTrackerDatabase::class.java
         )
             // allowing main thread queries, just for testing
             .allowMainThreadQueries()
@@ -50,7 +50,7 @@ open class MovementDaoTest {
         val expected = Movement(
             description = "Test",
             type = MovementType.IN,
-            datetime = LocalDateTime.now(),
+            date = LocalDate.now(),
             price = 1.0
         )
         val rowId = database.movementDao().insert(expected)
@@ -62,19 +62,23 @@ open class MovementDaoTest {
     @Test
     fun should_return_movements() {
 
-        database.movementDao().insert(Movement(
-            description = "Test",
-            type = MovementType.IN,
-            datetime = LocalDateTime.now(),
-            price = 1.0
-        ))
+        database.movementDao().insert(
+            Movement(
+                description = "Test",
+                type = MovementType.IN,
+                date = LocalDate.now(),
+                price = 1.0
+            )
+        )
 
-        database.movementDao().insert(Movement(
-            description = "Test2",
-            type = MovementType.IN,
-            datetime = LocalDateTime.now(),
-            price = 1.0
-        ))
+        database.movementDao().insert(
+            Movement(
+                description = "Test2",
+                type = MovementType.IN,
+                date = LocalDate.now(),
+                price = 1.0
+            )
+        )
 
         val expected = 2
         val actual = database.movementDao().getAll().blockingObserve()?.size ?: 0
@@ -85,19 +89,23 @@ open class MovementDaoTest {
     @Test
     fun should_delete_movements() {
 
-        database.movementDao().insert(Movement(
-            description = "Test",
-            type = MovementType.IN,
-            datetime = LocalDateTime.now(),
-            price = 1.0
-        ))
+        database.movementDao().insert(
+            Movement(
+                description = "Test",
+                type = MovementType.IN,
+                date = LocalDate.now(),
+                price = 1.0
+            )
+        )
 
-        val rowId = database.movementDao().insert(Movement(
-            description = "Test2",
-            type = MovementType.IN,
-            datetime = LocalDateTime.now(),
-            price = 1.0
-        ))
+        val rowId = database.movementDao().insert(
+            Movement(
+                description = "Test2",
+                type = MovementType.IN,
+                date = LocalDate.now(),
+                price = 1.0
+            )
+        )
 
         val mov2 = database.movementDao().getById(rowId).blockingObserve()!!
 

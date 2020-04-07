@@ -17,12 +17,12 @@ interface MovementDao {
     @Delete
     fun delete(vararg movement: Movement)
 
-    @Query("SELECT * FROM movement_table ORDER BY datetime DESC")
+    @Query("SELECT * FROM movement_table ORDER BY date DESC")
     fun getAll(): LiveData<List<Movement>>
 
     @Query("SELECT * FROM movement_table WHERE id = :id")
     fun getById(id:Long): LiveData<Movement>
 
-    @Query("SELECT * FROM movement_table WHERE description = :description ORDER BY datetime DESC")
+    @Query("SELECT * FROM movement_table WHERE description = :description ORDER BY date DESC")
     fun getByDescription(description: String): LiveData<List<Movement>>
 }

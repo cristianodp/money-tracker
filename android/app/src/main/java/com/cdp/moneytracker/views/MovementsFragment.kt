@@ -1,4 +1,4 @@
-package com.cdp.moneytracker
+package com.cdp.moneytracker.views
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
+import com.cdp.moneytracker.R
 import kotlinx.android.synthetic.main.fragment_movements.*
 
 
@@ -16,7 +17,7 @@ class MovementsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_movements , container, false)
+        return inflater.inflate(R.layout.fragment_movements, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
